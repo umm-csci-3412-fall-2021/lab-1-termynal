@@ -2,7 +2,9 @@ TEMPFOLDER=$(mktemp -d "temp.XXXXXXXXXXXXXXX")
 
 for var in "$@"
 do
-	tar -xzf "../log_files/$var" -C "../bin/$TEMPFOLDER"
+	CLIENTNAME=$(echo "$var" |sed 's/([a-zA-z]{1,})_secure.tgz/\1/')
+	mkdir "$TEMPFOLDER/$CLIENTNAME"
+	tar -xzf "../log_files/$var" -C "../bin/$TEMPFOLDER/$CLIENTNAME"
 	./process_client_logs.sh
 done
 
@@ -11,4 +13,6 @@ done
 ./create_country_dist.sh
 ./assemble_report.sh
 
-# mv failed_login_summary.html ./something
+
+cd "$TEMPFOLDER"
+mv failed_login_summary.html ../.
