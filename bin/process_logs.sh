@@ -2,17 +2,17 @@ TEMPFOLDER=$(mktemp -d "temp.XXXXXXXXXXXXXXX")
 
 for var in "$@"
 do
-	CLIENTNAME=$(echo "$var" |sed 's/([a-zA-z]{1,})_secure.tgz/\1/')
+	CLIENTNAME=$(echo "$var" | awk 'match($0, /([a-zA-z]{1,}).tgz/, groups) {print groups[1]}')
 	mkdir "$TEMPFOLDER/$CLIENTNAME"
-	tar -xzf "../log_files/$var" -C "../bin/$TEMPFOLDER/$CLIENTNAME"
-	./process_client_logs.sh "$TEMPFOLDER/$CLIENTNAME"
+	tar -xzf "$var" -C "$TEMPFOLDER/$CLIENTNAME"
+	./bin/process_client_logs.sh "$TEMPFOLDER/$CLIENTNAME"
 done
 
-./create_username_dist.sh
-./create_hours_dist.sh
-./create_country_dist.sh
-./assemble_report.sh
+./bin/create_username_dist.sh "$TEMPFOLDER"
+./bin/create_hours_dist.sh "$TEMPFOLDER"
+./bin/create_country_dist.sh "$TEMPFOLDER"
+./bin/assemble_report.sh "$TEMPFOLDER"
 
 
-cd "$TEMPFOLDER"
+cd "$TEMPFOLDER" || exit
 mv failed_login_summary.html ../.
