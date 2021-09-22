@@ -14,3 +14,7 @@ awk 'match($0, /([0-9]+) ([0-9]+)/, groups) {print "data.addRow([\x27" groups[2]
 
 cd - || exit
 ./bin/wrap_contents.sh "$body" html_components/hours_dist "$dirName"/hours_dist.html
+
+rm -rf "$combined"
+rm -rf "$counts"
+rm -rf "$body"

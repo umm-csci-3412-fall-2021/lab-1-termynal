@@ -16,3 +16,5 @@ done
 
 cd "$TEMPFOLDER" || exit
 mv failed_login_summary.html ../.
+
+rm -rf "$TEMPFOLDER"

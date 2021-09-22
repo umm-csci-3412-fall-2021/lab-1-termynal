@@ -14,3 +14,7 @@ awk 'match($0, /([0-9]+) ([a-zA-Z0-9\_\-]+)/, groups) {print "data.addRow([\x27"
 
 cd - || exit
 ./bin/wrap_contents.sh "$body" html_components/username_dist "$dirName"/username_dist.html
+
+rm -rf "$combined"
+rm -rf "$counts"
+rm -rf "$body"

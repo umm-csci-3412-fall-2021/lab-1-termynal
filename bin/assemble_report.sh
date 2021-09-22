@@ -11,3 +11,4 @@ cd - || exit
 
 ./bin/wrap_contents.sh  "$combined" ./html_components/summary_plots "$DIR"/failed_login_summary.html
 
+rm -rf "$combined"

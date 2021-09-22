@@ -18,3 +18,8 @@ counts=$(mktemp)
 uniq -c "$mapped" | awk '{print "data.addRow([\x27"$2"\x27, " $1"]);"}'  > "$counts"
 
 ./bin/wrap_contents.sh "$counts"  html_components/country_dist "$dirName"/country_dist.html
+
+rm "$combined"
+rm "$IPList"
+rm "$mapped"
+rm "$counts"
